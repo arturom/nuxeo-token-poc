@@ -1,0 +1,36 @@
+<html>
+
+<body>
+    <!--
+        This html document is a proof of concept to demonstrate how to get a token from the server
+        and using that token to create a session in Nuxeo web UI
+
+        When the user clicks on the button, a token is requested from the server.
+        A form containing the redirect url and the token is posted to the Nuxeo server, which
+        initializes the user session, granting the user access to the Nuxeo interactive Web UI
+    -->
+
+    <div>
+        <button type="submit" id="open-doc-btn">Open Document</button>
+        <form id="login-form" method="post" target="_blank">
+            <!-- The value here can be a Nuxeo Web UI path, such as the path to a document or a workflow task -->
+            <input type="hidden" name="requestedUrl" value="ui/#!/browse/default-domain/" />
+        </form>
+    </div>
+    <script>
+        (function () {
+            const form = document.getElementById('login-form');
+            const button = document.getElementById('open-doc-btn');
+
+            button.addEventListener('click', async () => {
+                const data = await fetch('/create-session').then(res => res.json());
+                const { token, url } = data;
+
+                form.action = `${url}/startup?token=${token}`;
+                form.submit();
+            });
+        }());
+    </script>
+</body>
+
+</html>

@@ -17,8 +17,8 @@ function getNuxeoClient() {
     baseURL,
     auth: {
       method: "basic",
-      username: "Administrator" | NUXEO_USERNAME,
-      password: "Administrator" | NUXEO_PASSWORD,
+      username: "Administrator" || NUXEO_USERNAME,
+      password: "Administrator" || NUXEO_PASSWORD,
     },
   };
 
